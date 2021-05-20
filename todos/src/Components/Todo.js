@@ -1,27 +1,26 @@
-import React, {useState} from 'react'
+import React from 'react'
 
 
 function Todo(props) {
 
-    const [complete, setComplete] = useState(false);
-
     const onCompleteHandler = () => {
-        // setComplete(true);
-        props.submitCompleteTodo()
+        console.log("print in todo");
+        props.submitCompleteTodo(props.currTodo.id)
     }
 
     const onActiveHandler = () => {
-        // setCheck(!check);
-        props.submitInProgressTodo();
+        console.log("onActiveHandler print in todo");
+
+        props.submitInProgressTodo(props.currTodo.id);
     }
 
 
     return (
       <form>
-          {/* <input type="checkbox"> {complete ? "inProgress" : "complete"}</input> */}
-          <input type="checkbox" name="news" id="news" checked={props.active} onChange={props.active ? () => onActiveHandler(props.id) : 
-                                                                                                        () => onCompleteHandler(props.id)}/> 
-          {props.label}
+          {console.log(props.currTodo.active)}
+          <input type="checkbox" name="news" id="news" checked={!props.currTodo.active} onChange={!props.currTodo.active ? onActiveHandler : 
+                                                                                                                        onCompleteHandler}/> 
+          {props.currTodo.label}
       </form>
     );
   }
