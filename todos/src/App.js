@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App">
       <input></input>
-      <Todo></Todo>
+      <Todo label="hadas"></Todo>
     </div>
   );
 }

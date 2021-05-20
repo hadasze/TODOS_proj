@@ -7,7 +7,7 @@ function Todo(props) {
       <form>
           <href>
           <button>button</button>
-          todo
+          {props.label}
           </href>
       </form>
     );
