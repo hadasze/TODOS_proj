@@ -13,7 +13,7 @@ function OptionBar(props) {
           ~~ total todos: {props.allTodos} ~~ 
           </div>
           <div>
-          ~~ still needs to work on: {props.allActives} ~~          
+          ~~ still needs to work on: {props.allActives} todos ~~          
           </div>
       </div>
     );

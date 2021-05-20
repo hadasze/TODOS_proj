@@ -13,7 +13,6 @@ function App() {
   const [mode, setMode] = useState("all");
 
   const submitCompleteTodo = (currID) => {
-    console.log(currID);
    setAllTodos(allTodos.map(todo => todo.id === currID ? {id: currID, label: todo.label, active: !todo.active} : todo ));
   }
 
@@ -41,14 +40,16 @@ function App() {
   return (
     <div className="App">
       <h3>MY TODO'S LIST:</h3>
-      <input type="text" name="todoLabel" id="label" placeholder="give titel for your todo..." onChange={(e) => setEnteredTodoLabel(e.target.value)}/> 
+      <input type="text" name="todoLabel" id="label" placeholder="give titel for your todo..." required onChange={(e) => setEnteredTodoLabel(e.target.value)}/> 
       <button onClick={addTodo}> ADD TODO</button>
           
     {mode ==="all" ?  
       <div>
         <h2>all todos</h2>
           {allTodos ? allTodos.map((currTodo) => 
-              <Todo currTodo={currTodo} submitCompleteTodo={submitCompleteTodo} submitInProgressTodo={submitInProgressTodo}></Todo>
+             <ul key={currTodo.id}>
+                <Todo currTodo={currTodo} submitCompleteTodo={submitCompleteTodo} submitInProgressTodo={submitInProgressTodo}></Todo>
+             </ul>
           ) : ""}
       </div>: ""}
 
@@ -56,7 +57,10 @@ function App() {
       <div>
         <h2>active todos</h2>
           {allTodos ? allTodos.map((currTodo) => 
-                 currTodo.active ? <Todo currTodo={currTodo} submitCompleteTodo={submitCompleteTodo} submitInProgressTodo={submitInProgressTodo}></Todo>
+                 currTodo.active ? 
+                 <ul key={currTodo.id}>
+                    <Todo currTodo={currTodo} submitCompleteTodo={submitCompleteTodo} submitInProgressTodo={submitInProgressTodo}></Todo>
+                 </ul>
                 : ""
         ) : ""}
       </div>: ""
@@ -66,7 +70,10 @@ function App() {
       <div>
         <h2>completed todos</h2>
           {allTodos ? allTodos.map((currTodo) => 
-                 !currTodo.active ? <Todo currTodo={currTodo} submitCompleteTodo={submitCompleteTodo} submitInProgressTodo={submitInProgressTodo}></Todo>
+                 !currTodo.active ? 
+                 <ul key={currTodo.id}>
+                   <Todo currTodo={currTodo} submitCompleteTodo={submitCompleteTodo} submitInProgressTodo={submitInProgressTodo}></Todo>
+                  </ul>
                 : ""
         ) : ""}
         </div>: ""
