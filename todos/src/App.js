@@ -1,29 +1,36 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+import OptionBar from './Components/OptionBar';
 import Todo from './Components/Todo'
 
 function App() {
 
+  //Todo template:  {id: number, label: label, active: true}
+
   const [enteredTodoLabel, setEnteredTodoLabel] = useState('stam');
   const [idCounter, setIdCounter] = useState(0);
-//  {id: number, label: label, active: true}
   const [allTodos, setAllTodos] = useState([]);
-
+  const [mode, setMode] = useState("all");
 
   const submitCompleteTodo = (currID) => {
-    allTodos.forEach(todo => { todo.id === currID ? todo.active = false : todo.active = todo.active;
-    });
+   setAllTodos(allTodos.map(todo => todo.id === currID ? {id: currID, label: todo.label, active: !todo.active} : todo ));
   }
 
   const submitInProgressTodo = (currID) => {
-    allTodos.forEach(todo => { todo.id === currID ? todo.active = true : todo.active = todo.active;
-    });
+   setAllTodos(allTodos.map(todo =>  todo.id === currID ? {id: currID, label: todo.label, active: !todo.active} : todo));
   }
 
   const addTodo = () => {
-    console.log("dd");
     setIdCounter(idCounter+1);
-    setAllTodos ( [...allTodos, {id: idCounter, label:enteredTodoLabel, active: true}])  
+    setAllTodos ( [...allTodos, {id: idCounter, label:enteredTodoLabel, active: true}])
+  }
+
+  const countActives = () =>{
+    let counter = 0;
+    allTodos.forEach(todo => 
+      todo.active === true ? counter = counter + 1 : counter
+    );
+    return counter;
   }
 
   useEffect(() => {
@@ -32,13 +39,47 @@ function App() {
 
   return (
     <div className="App">
-      <input type="text" name="todoLabel" id="label" onChange={(e) => setEnteredTodoLabel(e.target.value)} value={enteredTodoLabel}/> 
+      <h3>MY TODO'S LIST:</h3>
+      <input type="text" name="todoLabel" id="label" placeholder="give titel for your todo..." required onChange={(e) => setEnteredTodoLabel(e.target.value)}/> 
       <button onClick={addTodo}> ADD TODO</button>
-      
-      <h2>all todos</h2>
-      {allTodos ? allTodos.map((currTodo) => 
-              <Todo id={currTodo.id} label={currTodo.label} submitCompleteTodo={submitCompleteTodo} submitInProgressTodo={submitInProgressTodo}></Todo>
-      ) : ""}
+          
+    {mode ==="all" ?  
+      <div>
+        <h2>all todos</h2>
+          {allTodos ? allTodos.map((currTodo) => 
+             <ul key={currTodo.id}>
+                <Todo currTodo={currTodo} submitCompleteTodo={submitCompleteTodo} submitInProgressTodo={submitInProgressTodo}></Todo>
+             </ul>
+          ) : ""}
+      </div>: ""}
+
+    {mode==="active" ?       
+      <div>
+        <h2>active todos</h2>
+          {allTodos ? allTodos.map((currTodo) => 
+                 currTodo.active ? 
+                 <ul key={currTodo.id}>
+                    <Todo currTodo={currTodo} submitCompleteTodo={submitCompleteTodo} submitInProgressTodo={submitInProgressTodo}></Todo>
+                 </ul>
+                : ""
+        ) : ""}
+      </div>: ""
+    }
+
+    {mode==="completed" ?       
+      <div>
+        <h2>completed todos</h2>
+          {allTodos ? allTodos.map((currTodo) => 
+                 !currTodo.active ? 
+                 <ul key={currTodo.id}>
+                   <Todo currTodo={currTodo} submitCompleteTodo={submitCompleteTodo} submitInProgressTodo={submitInProgressTodo}></Todo>
+                  </ul>
+                : ""
+        ) : ""}
+        </div>: ""
+    }
+
+      <OptionBar setMode={setMode} allTodos={allTodos.length} allActives={countActives()}></OptionBar>
       
     </div>
   );
