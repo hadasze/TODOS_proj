@@ -1,8 +1,6 @@
 import React from 'react'
 
-
-export function Todo(props) {
-
+ const Todo : React.FC <{todo: {id: string, active: boolean, label: string}, submitCompleteTodo: (id: string) => void, submitInProgressTodo: (id: string) => void}> = (props) => {
     const onCompleteHandler = () => {
         props.submitCompleteTodo(props.todo.id)
     }
@@ -20,4 +18,6 @@ export function Todo(props) {
       </form>
     );
   }
+
+  export default Todo;
   

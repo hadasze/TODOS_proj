@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-export function OptionBar(props) {
+export const OptionBar: React.FC<{setMode: (label: string) => void, allTodos: number, allActives: number}> = (props) => {
     return (
       <div>
           <button onClick={() => props.setMode("all")}> ALL </button>

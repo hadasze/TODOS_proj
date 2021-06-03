@@ -1,23 +1,24 @@
 import { useState, useRef } from 'react';
 import './App.css';
 import {OptionBar} from './Components/OptionBar';
-import {TodosList} from './Components/TodosList';
+import TodosList from './Components/TodosList';
 
 export function App() {
 
   function useTodos(){
 
-    const submitCompleteTodo = (currID) => {
+    const submitCompleteTodo = (currID: string) => {
       setAllTodos(allTodos.map(todo => todo.id === currID ? {id: currID, label: todo.label, active: !todo.active} : todo ));
      }
 
-     const submitInProgressTodo = (currID) => {
+     const submitInProgressTodo = (currID: string) => {
       setAllTodos(allTodos.map(todo =>  todo.id === currID ? {id: currID, label: todo.label, active: !todo.active} : todo));
      }
    
      const addTodo = () => {
-       setAllTodos ( [...allTodos, {id: allTodos.length, label:enteredTodoLabel.current.value, active: true}])
-       enteredTodoLabel.current.value = '';
+       const todoToAdd = {id: allTodos.length.toString(), label:enteredTodoLabel.current!.value, active: true};
+       setAllTodos ( allTodos.concat(todoToAdd))
+       enteredTodoLabel.current!.value = '';
      }
 
      const countActives = () =>{
@@ -33,8 +34,8 @@ export function App() {
   }
 
   //Todo template:  {id: number, label: label, active: true}
-  const enteredTodoLabel = useRef();
-  const [allTodos, setAllTodos] = useState([]);
+  const enteredTodoLabel = useRef<HTMLInputElement>(null);
+  const [allTodos, setAllTodos] = useState<{id:string, label:string, active:boolean}[]>([]);
   const [mode, setMode] = useState("all");
 
   const { submitCompleteTodo, submitInProgressTodo, addTodo, countActives } = useTodos();
