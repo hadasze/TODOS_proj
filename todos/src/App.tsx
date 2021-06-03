@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import './App.css';
 import {OptionBar} from './Components/OptionBar';
 import TodosList from './Components/TodosList';
+import {todo} from './Types/todo'
 
 export function App() {
 
@@ -35,7 +36,7 @@ export function App() {
 
   //Todo template:  {id: number, label: label, active: true}
   const enteredTodoLabel = useRef<HTMLInputElement>(null);
-  const [allTodos, setAllTodos] = useState<{id:string, label:string, active:boolean}[]>([]);
+  const [allTodos, setAllTodos] = useState<todo[]>([]);
   const [mode, setMode] = useState("all");
 
   const { submitCompleteTodo, submitInProgressTodo, addTodo, countActives } = useTodos();

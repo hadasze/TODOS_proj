@@ -1,7 +1,9 @@
 import React from 'react'
 import Todo from './Todo'
+import {todo} from '../Types/todo'
 
-const TodosList : React.FC <{title: string, mode: string, todos: {id: string, active: boolean, label: string}[], submitCompleteTodo: (id: string) => void, submitInProgressTodo: (id: string) => void}> = (props) => {
+
+const TodosList : React.FC <{title: string, mode: string, todos: todo[], submitCompleteTodo: (id: string) => void, submitInProgressTodo: (id: string) => void}> = (props) => {
 
     const pred = (todo : {id: string, active: boolean, label: string}) => {
        return props.mode === "active" ? todo.active :
