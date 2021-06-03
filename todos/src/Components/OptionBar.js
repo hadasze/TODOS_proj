@@ -1,9 +1,7 @@
 import React from 'react'
 
 
-function OptionBar(props) {
-
-
+export function OptionBar(props) {
     return (
       <div>
           <button onClick={() => props.setMode("all")}> ALL </button>
@@ -19,4 +17,3 @@ function OptionBar(props) {
     );
   }
   
-  export default OptionBar;
