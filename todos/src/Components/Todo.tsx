@@ -1,7 +1,13 @@
 import React from 'react'
 import {todo} from '../Types/todo'
 
- const Todo : React.FC <{todo: todo, submitCompleteTodo: (id: string) => void, submitInProgressTodo: (id: string) => void}> = (props) => {
+interface TodoProps {
+  todo: todo
+  submitCompleteTodo: (id: string) => void
+  submitInProgressTodo: (id: string) => void
+}
+
+ const Todo : React.FC <TodoProps> = (props) => {
     const onCompleteHandler = () => {
         props.submitCompleteTodo(props.todo.id)
     }
